@@ -2,6 +2,9 @@ package com.marttapps.securefolder.ui.component;
 
 import javax.swing.JTextField;
 
+/**
+ * 輸入框欄位元件
+ */
 public class LabelInputField extends LabelTextField {
 
 	private static final long serialVersionUID = 1L;

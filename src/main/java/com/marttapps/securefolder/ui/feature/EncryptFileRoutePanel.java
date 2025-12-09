@@ -31,6 +31,9 @@ import com.marttapps.securefolder.model.constants.UiConstants;
 import com.marttapps.swingrouter.RoutePanel;
 import com.marttapps.swingrouter.Router;
 
+/**
+ * 加密功能
+ */
 public class EncryptFileRoutePanel extends RoutePanel {
 
 	private static final long serialVersionUID = 1L;

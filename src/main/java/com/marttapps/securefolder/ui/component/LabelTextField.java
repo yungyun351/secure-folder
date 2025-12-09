@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 
 import com.marttapps.securefolder.model.constants.UiConstants;
 
+/**
+ * 欄位元件的包裝類別
+ */
 public abstract class LabelTextField extends JPanel {
 
 	private static final long serialVersionUID = 1L;

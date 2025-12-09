@@ -12,7 +12,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.SecretKey;
 
 import com.marttapps.securefolder.codec.EncFileCodec;
-import com.marttapps.securefolder.model.bean.EncMetadata;
+import com.marttapps.securefolder.model.bean.EncFile;
 import com.marttapps.securefolder.model.listener.EncFileProgressListener;
 import com.marttapps.securefolder.service.CryptoService;
 import com.marttapps.securefolder.service.EncFileService;
@@ -110,7 +110,7 @@ public class EncFileServiceImpl implements EncFileService {
 	}
 
 	private void decryptFile(Path encryptedFile, Path outputDir, char[] pwd) throws IOException, BadPaddingException {
-		EncMetadata meta = new EncFileCodec().read(encryptedFile);
+		EncFile meta = new EncFileCodec().read(encryptedFile);
 		SecretKey key = CryptoService.INSTANCE.deriveKey(pwd, meta.getSalt());
 		byte[] plain = CryptoService.INSTANCE.decryptBytes(meta.getEncryptedData(), key).orElse(null);
 		if (plain == null)

@@ -31,36 +31,25 @@ public interface CryptoService {
 	 */
 	SecretKey deriveKey(char[] password, byte[] salt);
 
-
 	/**
 	 * 加密
 	 * 
-	 * @param plain
+	 * @param plain 明文資料
 	 * @param key   金鑰
-	 * @return
-	 * @throws IOException
+	 * @return 加密資料
+	 * @throws IOException 讀檔失敗
 	 */
 	Optional<byte[]> encryptBytes(byte[] plain, SecretKey key) throws IOException;
 
 	/**
 	 * 解密
 	 * 
-	 * @param cipher
+	 * @param cipher 加密資料
 	 * @param key    金鑰
-	 * @return
-	 * @throws IOException
-	 * @throws BadPaddingException
+	 * @return 明文資料
+	 * @throws IOException         讀檔失敗
+	 * @throws BadPaddingException 解密失敗
 	 */
 	Optional<byte[]> decryptBytes(byte[] cipher, SecretKey key) throws IOException, BadPaddingException;
-
-	/**
-	 * 解密
-	 * 
-	 * @param encryptedFile 加密檔案
-	 * @param plainFile     普通檔案
-	 * @param key           金鑰
-	 * @throws IOException
-	 * @throws BadPaddingException
-	 */
 
 }

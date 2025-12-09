@@ -8,6 +8,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+/**
+ * 檔案選取欄位元件
+ */
 public class LabelFileField extends LabelTextField {
 
 	private static final long serialVersionUID = 1L;
