@@ -1,6 +1,5 @@
 package com.marttapps.securefolder.service;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import javax.crypto.BadPaddingException;
@@ -37,9 +36,8 @@ public interface CryptoService {
 	 * @param plain 明文資料
 	 * @param key   金鑰
 	 * @return 加密資料
-	 * @throws IOException 讀檔失敗
 	 */
-	Optional<byte[]> encryptBytes(byte[] plain, SecretKey key) throws IOException;
+	Optional<byte[]> encryptBytes(byte[] plain, SecretKey key);
 
 	/**
 	 * 解密
@@ -47,9 +45,8 @@ public interface CryptoService {
 	 * @param cipher 加密資料
 	 * @param key    金鑰
 	 * @return 明文資料
-	 * @throws IOException         讀檔失敗
 	 * @throws BadPaddingException 解密失敗
 	 */
-	Optional<byte[]> decryptBytes(byte[] cipher, SecretKey key) throws IOException, BadPaddingException;
+	Optional<byte[]> decryptBytes(byte[] cipher, SecretKey key) throws BadPaddingException;
 
 }

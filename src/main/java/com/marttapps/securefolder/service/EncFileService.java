@@ -20,7 +20,7 @@ public interface EncFileService {
 	 * @param pwd  密碼
 	 * @throws IOException 讀檔失敗
 	 */
-	public void encryptFolder(Path root, char[] pwd, EncFileProgressListener listener) throws IOException;
+	void encryptFolder(Path root, char[] pwd, EncFileProgressListener listener) throws IOException;
 
 	/**
 	 * 解密資料夾內的檔案
@@ -29,6 +29,22 @@ public interface EncFileService {
 	 * @param pwd  密碼
 	 * @throws IOException 讀檔失敗
 	 */
-	public void decryptFolder(Path root, char[] pwd, EncFileProgressListener listener) throws IOException;
+	void decryptFolder(Path root, char[] pwd, EncFileProgressListener listener) throws IOException;
+
+	/**
+	 * 是否為加密檔案
+	 * 
+	 * @param path 檔案路徑
+	 * @return 是否為加密檔案
+	 */
+	boolean isEncryptedFile(Path path);
+
+	/**
+	 * 是否不是加密檔案
+	 * 
+	 * @param path 檔案路徑
+	 * @return 是否不是加密檔案
+	 */
+	boolean isNotEncryptedFile(Path path);
 
 }
