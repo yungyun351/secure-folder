@@ -1,5 +1,8 @@
 package com.marttapps.securefolder.model.constants;
 
+/**
+ * ui相關的常數
+ */
 public class UiConstants {
 
 	private UiConstants() {

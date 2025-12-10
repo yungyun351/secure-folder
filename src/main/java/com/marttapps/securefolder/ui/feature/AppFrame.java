@@ -34,8 +34,7 @@ public class AppFrame extends JFrame {
 		ImageIcon icon = new ImageIcon(getClass().getResource("/img/icon.png"));
 		setIconImage(icon.getImage());
 
-		JPanel container = new JPanel();
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+		Box container = Box.createVerticalBox();
 
 		JTabbedPane tabs = new JTabbedPane();
 		tabs.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, UiConstants.STYLE_DEFAULT_FONT_SIZE));

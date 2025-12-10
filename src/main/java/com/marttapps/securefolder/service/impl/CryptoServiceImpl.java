@@ -1,6 +1,5 @@
 package com.marttapps.securefolder.service.impl;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -57,7 +56,7 @@ public class CryptoServiceImpl implements CryptoService {
 	}
 
 	@Override
-	public Optional<byte[]> encryptBytes(byte[] plain, SecretKey key) throws IOException {
+	public Optional<byte[]> encryptBytes(byte[] plain, SecretKey key) {
 		byte[] iv = new byte[12];
 		new SecureRandom().nextBytes(iv);
 
@@ -97,7 +96,7 @@ public class CryptoServiceImpl implements CryptoService {
 	}
 
 	@Override
-	public Optional<byte[]> decryptBytes(byte[] encrypted, SecretKey key) throws IOException, BadPaddingException {
+	public Optional<byte[]> decryptBytes(byte[] encrypted, SecretKey key) throws BadPaddingException {
 		ByteBuffer bb = ByteBuffer.wrap(encrypted);
 
 		byte[] iv = new byte[12];

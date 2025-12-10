@@ -8,6 +8,9 @@ import javax.swing.JTextField;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+/**
+ * 密碼欄位元件
+ */
 public class LabelPasswordField extends LabelTextField {
 
 	private static final long serialVersionUID = 1L;

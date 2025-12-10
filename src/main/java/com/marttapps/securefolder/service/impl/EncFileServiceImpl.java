@@ -5,14 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.SecretKey;
 
 import com.marttapps.securefolder.codec.EncFileCodec;
-import com.marttapps.securefolder.model.bean.EncMetadata;
+import com.marttapps.securefolder.model.bean.EncFile;
 import com.marttapps.securefolder.model.listener.EncFileProgressListener;
 import com.marttapps.securefolder.service.CryptoService;
 import com.marttapps.securefolder.service.EncFileService;
@@ -26,7 +25,7 @@ public class EncFileServiceImpl implements EncFileService {
 		List<Path> filesToProcess;
 		try (Stream<Path> paths = Files.walk(rootPath)) {
 			filesToProcess = paths.filter(Files::isRegularFile) //
-					.filter(Predicate.not(this::isEncryptedFile)) //
+					.filter(this::isNotEncryptedFile) //
 					.toList();
 		}
 
@@ -37,22 +36,17 @@ public class EncFileServiceImpl implements EncFileService {
 			if (listener.isCancelled())
 				break;
 
-			index++;
-			listener.onFileStart(index, file);
+			listener.onFileStart(index++, file);
 
-			boolean succ = false;
 			Exception e = null;
 			try {
 				encryptFile(file, file.getParent(), pwd);
-				succ = true;
+				Files.deleteIfExists(file);
 			} catch (IOException e1) {
 				e = e1;
 			}
 
-			listener.onFileDone(index, file, succ, e);
-
-			if (succ)
-				Files.deleteIfExists(file);
+			listener.onFileDone(index, file, e == null, e);
 		}
 
 		listener.onCompleted();
@@ -76,24 +70,38 @@ public class EncFileServiceImpl implements EncFileService {
 
 			listener.onFileStart(index++, file);
 
-			boolean succ = false;
 			Exception e = null;
 			try {
 				decryptFile(file, file.getParent(), pwd);
-				succ = true;
+				Files.deleteIfExists(file);
 			} catch (IOException | BadPaddingException e1) {
 				e = e1;
 			}
 
-			listener.onFileDone(index, file, succ, e);
-
-			if (succ)
-				Files.deleteIfExists(file);
+			listener.onFileDone(index, file, e == null, e);
 		}
 
 		listener.onCompleted();
 	}
 
+	@Override
+	public boolean isEncryptedFile(Path path) {
+		return path.getFileName().toString().endsWith(ENCRYPTED_FILE_EXTENSION);
+	}
+
+	@Override
+	public boolean isNotEncryptedFile(Path path) {
+		return !isEncryptedFile(path);
+	}
+
+	/**
+	 * 加密檔案
+	 * 
+	 * @param plainFile 明文檔案
+	 * @param outputDir 輸出路徑
+	 * @param pwd       密碼
+	 * @throws IOException 讀檔失敗
+	 */
 	private void encryptFile(Path plainFile, Path outputDir, char[] pwd) throws IOException {
 		byte[] plain = Files.readAllBytes(plainFile);
 		byte[] salt = CryptoService.INSTANCE.generateSalt();
@@ -109,8 +117,17 @@ public class EncFileServiceImpl implements EncFileService {
 		new EncFileCodec().write(encryptedFile, fileName, salt, encrypted);
 	}
 
+	/**
+	 * 解密檔案
+	 * 
+	 * @param encryptedFile 加密檔案
+	 * @param outputDir     輸出路徑
+	 * @param pwd           密碼
+	 * @throws IOException         讀檔失敗
+	 * @throws BadPaddingException 解密失敗
+	 */
 	private void decryptFile(Path encryptedFile, Path outputDir, char[] pwd) throws IOException, BadPaddingException {
-		EncMetadata meta = new EncFileCodec().read(encryptedFile);
+		EncFile meta = new EncFileCodec().read(encryptedFile);
 		SecretKey key = CryptoService.INSTANCE.deriveKey(pwd, meta.getSalt());
 		byte[] plain = CryptoService.INSTANCE.decryptBytes(meta.getEncryptedData(), key).orElse(null);
 		if (plain == null)
@@ -118,16 +135,6 @@ public class EncFileServiceImpl implements EncFileService {
 
 		Path plainFile = outputDir.resolve(meta.getFileName());
 		Files.write(plainFile, plain);
-	}
-
-	/**
-	 * 是否為加密檔案
-	 * 
-	 * @param path
-	 * @return
-	 */
-	private boolean isEncryptedFile(Path path) {
-		return path.getFileName().toString().endsWith(ENCRYPTED_FILE_EXTENSION);
 	}
 
 }
