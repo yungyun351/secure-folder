@@ -30,6 +30,7 @@ public class LabelFileField extends LabelTextField {
 		fileBtn.setPreferredSize(btnSize);
 		fileBtn.setMinimumSize(btnSize);
 		fileBtn.setMaximumSize(btnSize);
+		fileBtn.setFocusable(false);
 		fileBtn.addActionListener(e -> {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(fileSelectionMode);

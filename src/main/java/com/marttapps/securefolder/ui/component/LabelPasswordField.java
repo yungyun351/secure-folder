@@ -34,6 +34,7 @@ public class LabelPasswordField extends LabelTextField {
 		toggleBtn.setMinimumSize(btnSize);
 		toggleBtn.setMaximumSize(btnSize);
 		toggleBtn.putClientProperty(FlatClientProperties.BUTTON_TYPE, FlatClientProperties.BUTTON_TYPE_BORDERLESS);
+		toggleBtn.setFocusable(false);
 		toggleBtn.addActionListener(e -> togglePassword());
 		addRightComponent(toggleBtn);
 	}
