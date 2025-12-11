@@ -142,7 +142,7 @@ public class SecureProcessWorker extends SwingWorker<Void, Integer> {
 	protected void done() {
 		execBtn.setVisible(true);
 		cancelBtn.setVisible(false);
-		progressBar.setValue(100);
+		progressBar.setValue(progressBar.getValue() + 1);
 
 		if (isCancelled()) {
 			DialogUtil.showInfoDialog("操作已取消");
