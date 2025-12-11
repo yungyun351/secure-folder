@@ -79,13 +79,13 @@ public class EncryptFileRoutePanel extends RoutePanel {
 
 		Box content = Box.createVerticalBox();
 		dirField = new LabelFileField(fieldWidth, "資料夾:", fieldLabelSize, fieldErrorSize, errorText,
-				JFileChooser.DIRECTORIES_ONLY);
+				JFileChooser.DIRECTORIES_ONLY, true);
 		content.add(dirField);
 
-		pwdField = new LabelPasswordField(fieldWidth, "密碼:", fieldLabelSize, fieldErrorSize, errorText);
+		pwdField = new LabelPasswordField(fieldWidth, "密碼:", fieldLabelSize, fieldErrorSize, errorText, true);
 		content.add(pwdField);
 
-		pwdConfirmField = new LabelPasswordField(fieldWidth, "確認密碼:", fieldLabelSize, fieldErrorSize, errorText);
+		pwdConfirmField = new LabelPasswordField(fieldWidth, "確認密碼:", fieldLabelSize, fieldErrorSize, errorText, true);
 		content.add(pwdConfirmField);
 
 		Box openDirRow = Box.createHorizontalBox();

@@ -77,10 +77,10 @@ public class DecryptFileRoutePanel extends RoutePanel {
 
 		Box content = Box.createVerticalBox();
 		dirField = new LabelFileField(fieldWidth, "資料夾:", fieldLabelSize, fieldErrorSize, errorText,
-				JFileChooser.DIRECTORIES_ONLY);
+				JFileChooser.DIRECTORIES_ONLY, true);
 		content.add(dirField);
 
-		pwdField = new LabelPasswordField(fieldWidth, "密碼:", fieldLabelSize, fieldErrorSize, errorText);
+		pwdField = new LabelPasswordField(fieldWidth, "密碼:", fieldLabelSize, fieldErrorSize, errorText, true);
 		content.add(pwdField);
 
 		Box openDirRow = Box.createHorizontalBox();

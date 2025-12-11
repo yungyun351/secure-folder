@@ -6,11 +6,14 @@ import com.marttapps.swingrouter.Route;
 import com.marttapps.swingrouter.RoutePanel;
 
 /**
- * 路由
+ * 路由設定
  */
 public enum Routes implements Route {
-	DECRYPT_FILE(DecryptFileRoutePanel.class), //
-	ENCRYPT_FILE(EncryptFileRoutePanel.class), //
+
+	/** 加密功能 */
+	ENCRYPT_FILE(EncryptFileRoutePanel.class),
+	/** 解密功能 */
+	DECRYPT_FILE(DecryptFileRoutePanel.class),
 	//
 	;
 

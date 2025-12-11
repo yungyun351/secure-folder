@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.marttapps.securefolder.model.constants.UiConstants;
 
 /**
@@ -20,9 +21,6 @@ import com.marttapps.securefolder.model.constants.UiConstants;
 public abstract class LabelTextField extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String OUTLINE_PROPERTY = "JComponent.outline";
-	private static final String OUTLINE_ERROR = "error";
 
 	/** 主欄位區域 */
 	protected Box fieldBox;
@@ -111,7 +109,7 @@ public abstract class LabelTextField extends JPanel {
 	 */
 	public void showError() {
 		errorLabel.setText(errorText);
-		input.putClientProperty(OUTLINE_PROPERTY, OUTLINE_ERROR);
+		input.putClientProperty(FlatClientProperties.OUTLINE, FlatClientProperties.OUTLINE_ERROR);
 	}
 
 	/**
@@ -121,7 +119,7 @@ public abstract class LabelTextField extends JPanel {
 	 */
 	public void showError(String message) {
 		errorLabel.setText(message);
-		input.putClientProperty(OUTLINE_PROPERTY, OUTLINE_ERROR);
+		input.putClientProperty(FlatClientProperties.OUTLINE, FlatClientProperties.OUTLINE_ERROR);
 	}
 
 	/**
@@ -129,7 +127,7 @@ public abstract class LabelTextField extends JPanel {
 	 */
 	public void hideError() {
 		errorLabel.setText("");
-		input.putClientProperty(OUTLINE_PROPERTY, null);
+		input.putClientProperty(FlatClientProperties.OUTLINE, null);
 	}
 
 	/**

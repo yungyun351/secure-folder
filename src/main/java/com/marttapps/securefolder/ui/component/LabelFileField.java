@@ -8,6 +8,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.marttapps.securefolder.model.constants.UiConstants;
+
 /**
  * 檔案選取欄位元件
  */
@@ -17,14 +20,15 @@ public class LabelFileField extends LabelTextField {
 
 	private final JButton fileBtn;
 
-	public LabelFileField(int width, String labelText, int labelSize, int errorSize, int fileSelectionMode) {
-		this(width, labelText, labelSize, errorSize, "", fileSelectionMode);
+	public LabelFileField(int width, String labelText, int labelSize, int errorSize, int fileSelectionMode,
+			boolean showClearButton) {
+		this(width, labelText, labelSize, errorSize, "", fileSelectionMode, showClearButton);
 	}
 
 	public LabelFileField(int width, String labelText, int labelSize, int errorSize, String errorText,
-			int fileSelectionMode) {
+			int fileSelectionMode, boolean showClearButton) {
 		super(width, labelText, labelSize, errorSize, errorText);
-		fileBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
+		fileBtn = new JButton(UIManager.getIcon(UiConstants.ICON_DIRECTORY));
 		int sizePx = labelSize * 96 / 72;
 		Dimension btnSize = new Dimension(sizePx, sizePx);
 		fileBtn.setPreferredSize(btnSize);
@@ -42,6 +46,9 @@ public class LabelFileField extends LabelTextField {
 			input.setText(folder.getAbsolutePath());
 		});
 		this.addRightComponent(fileBtn);
+		if (showClearButton) {
+			input.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON, true);
+		}
 	}
 
 	@Override

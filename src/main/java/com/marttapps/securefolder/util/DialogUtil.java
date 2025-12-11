@@ -27,9 +27,10 @@ public class DialogUtil {
 
 	public static int showConfirmDialog(String msg) {
 		JLabel messageLabel = new JLabel(msg);
-		messageLabel.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, UiConstants.STYLE_DEFAULT_FONT_SIZE));
-//        messageLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		return JOptionPane.showConfirmDialog(null, messageLabel, "確認訊息", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		messageLabel
+				.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, UiConstants.STYLE_DEFAULT_FONT_SIZE));
+		return JOptionPane.showConfirmDialog(null, messageLabel, "確認訊息", JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE);
 	}
 
 }
