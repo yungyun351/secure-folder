@@ -18,4 +18,7 @@ public class UiConstants {
 	/** 目錄圖示 */
 	public static final String ICON_DIRECTORY = "FileView.directoryIcon";
 
+	/** 前景文字 */
+	public static final String LABEL_FOREGROUND = "Label.foreground";
+
 }

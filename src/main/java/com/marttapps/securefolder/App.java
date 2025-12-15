@@ -39,7 +39,7 @@ public class App {
 			UIManager.setLookAndFeel(new FlatMacDarkLaf());
 			IntelliJTheme.setup(App.class.getResourceAsStream(themePath));
 		} catch (UnsupportedLookAndFeelException e) {
-			DialogUtil.showErrorDialog("視窗樣式設定失敗");
+			DialogUtil.showErrorDialog("視窗樣式設定失敗。");
 		}
 		return this;
 	}

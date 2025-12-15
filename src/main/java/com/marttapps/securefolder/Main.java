@@ -12,7 +12,7 @@ public class Main {
 		SwingUtilities.invokeLater(() -> new App() //
 				.initLocale(Locale.TRADITIONAL_CHINESE) //
 				.initTheme("/theme/Cobalt_2.theme.json") //
-				.useRouter(Routes.ENCRYPT_FILE) //
+				.useRouter(Routes.PREFERENCES) //
 				.launch());
 	}
 }

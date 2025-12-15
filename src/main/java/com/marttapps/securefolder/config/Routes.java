@@ -2,6 +2,7 @@ package com.marttapps.securefolder.config;
 
 import com.marttapps.securefolder.ui.feature.DecryptFileRoutePanel;
 import com.marttapps.securefolder.ui.feature.EncryptFileRoutePanel;
+import com.marttapps.securefolder.ui.feature.PreferencesRoutePanel;
 import com.marttapps.swingrouter.Route;
 import com.marttapps.swingrouter.RoutePanel;
 
@@ -14,6 +15,8 @@ public enum Routes implements Route {
 	ENCRYPT_FILE(EncryptFileRoutePanel.class),
 	/** 解密功能 */
 	DECRYPT_FILE(DecryptFileRoutePanel.class),
+	/** 設定功能 */
+	PREFERENCES(PreferencesRoutePanel.class),
 	//
 	;
 
