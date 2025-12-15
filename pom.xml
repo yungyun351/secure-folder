@@ -46,11 +46,6 @@
 			<artifactId>swing-router</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.marttapps</groupId>
-			<artifactId>screen-rotator</artifactId>
-			<version>1.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>

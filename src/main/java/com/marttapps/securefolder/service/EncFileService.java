@@ -14,18 +14,18 @@ public interface EncFileService {
 	final EncFileService INSTANCE = new EncFileServiceImpl();
 
 	/**
-	 * 加密資料夾內的檔案
+	 * 加密目錄內的檔案
 	 * 
-	 * @param root 資料夾
+	 * @param root 目錄
 	 * @param pwd  密碼
 	 * @throws IOException 讀檔失敗
 	 */
 	void encryptFolder(Path root, char[] pwd, EncFileProgressListener listener) throws IOException;
 
 	/**
-	 * 解密資料夾內的檔案
+	 * 解密目錄內的檔案
 	 * 
-	 * @param root 資料夾
+	 * @param root 目錄
 	 * @param pwd  密碼
 	 * @throws IOException 讀檔失敗
 	 */

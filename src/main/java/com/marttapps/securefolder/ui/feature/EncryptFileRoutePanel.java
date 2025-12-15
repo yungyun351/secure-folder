@@ -2,11 +2,11 @@ package com.marttapps.securefolder.ui.feature;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
@@ -15,9 +15,7 @@ import java.util.stream.Stream;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -31,9 +29,11 @@ import com.marttapps.securefolder.ui.component.LabelPasswordField;
 import com.marttapps.securefolder.ui.component.LabelTextField;
 import com.marttapps.securefolder.ui.worker.SecureProcessWorker;
 import com.marttapps.securefolder.util.DialogUtil;
+import com.marttapps.securefolder.model.bean.Preferences;
 import com.marttapps.securefolder.model.constants.LimitConstants;
 import com.marttapps.securefolder.model.constants.UiConstants;
 import com.marttapps.securefolder.service.EncFileService;
+import com.marttapps.securefolder.service.PreferencesService;
 import com.marttapps.swingrouter.RoutePanel;
 import com.marttapps.swingrouter.Router;
 
@@ -44,14 +44,12 @@ public class EncryptFileRoutePanel extends RoutePanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/** 資料夾欄位 */
+	/** 目錄欄位 */
 	private LabelTextField dirField;
 	/** 密碼欄位 */
 	private LabelTextField pwdField;
 	/** 確認密碼欄位 */
 	private LabelTextField pwdConfirmField;
-	/** 開啟資料夾欄位 */
-	private JCheckBox openDirCheckbox;
 	/** 執行加密按鈕 */
 	private JButton execBtn;
 	/** 取消按鈕 */
@@ -71,43 +69,31 @@ public class EncryptFileRoutePanel extends RoutePanel {
 	private void render() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		int hintSize = 12;
 		int fieldWidth = 400;
 		int fieldLabelSize = 20;
 		int fieldErrorSize = 14;
 		String errorText = "錯誤";
 
-		Box content = Box.createVerticalBox();
-		dirField = new LabelFileField(fieldWidth, "資料夾:", fieldLabelSize, fieldErrorSize, errorText,
-				JFileChooser.DIRECTORIES_ONLY);
-		content.add(dirField);
-
-		pwdField = new LabelPasswordField(fieldWidth, "密碼:", fieldLabelSize, fieldErrorSize, errorText);
-		content.add(pwdField);
-
-		pwdConfirmField = new LabelPasswordField(fieldWidth, "確認密碼:", fieldLabelSize, fieldErrorSize, errorText);
-		content.add(pwdConfirmField);
-
-		Box openDirRow = Box.createHorizontalBox();
-		openDirRow.setBorder(new EmptyBorder(0, 0, 10, 0));
-
-		openDirCheckbox = new JCheckBox("完成後開啟資料夾");
-		openDirCheckbox.setFont(
-				new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.PLAIN, UiConstants.STYLE_DEFAULT_FONT_SIZE));
-		openDirRow.add(openDirCheckbox);
-
-		if (Desktop.isDesktopSupported()) {
-			openDirCheckbox.setSelected(true);
-		} else {
-			openDirCheckbox.setSelected(false);
-			openDirCheckbox.setEnabled(false);
-			JLabel hint = new JLabel("系統不支援");
-			hint.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, hintSize));
-			hint.setForeground(Color.RED);
-			openDirRow.add(hint);
+		Preferences prefs = null;
+		try {
+			prefs = PreferencesService.INSTANCE.load();
+		} catch (URISyntaxException ignore) {
+			// ignore
 		}
 
-		content.add(openDirRow);
+		Box content = Box.createVerticalBox();
+		dirField = new LabelFileField(fieldWidth, "目錄:", fieldLabelSize, fieldErrorSize, errorText,
+				JFileChooser.DIRECTORIES_ONLY, true);
+		if (prefs != null && prefs.isRememberLastFolder()) {
+			dirField.setText(prefs.getLastFolder());
+		}
+		content.add(dirField);
+
+		pwdField = new LabelPasswordField(fieldWidth, "密碼:", fieldLabelSize, fieldErrorSize, errorText, true);
+		content.add(pwdField);
+
+		pwdConfirmField = new LabelPasswordField(fieldWidth, "確認密碼:", fieldLabelSize, fieldErrorSize, errorText, true);
+		content.add(pwdConfirmField);
 
 		Box buttonRow = Box.createHorizontalBox();
 		buttonRow.setBorder(new EmptyBorder(0, 0, 10, 0));
@@ -188,8 +174,7 @@ public class EncryptFileRoutePanel extends RoutePanel {
 		pwdField.clearInput();
 		pwdConfirmField.clearInput();
 
-		worker = new SecureProcessWorker(true, dirPath, pwd.toCharArray(), openDirCheckbox.isSelected(), execBtn,
-				cancelBtn, progressBar, logArea);
+		worker = new SecureProcessWorker(true, dirPath, pwd.toCharArray(), execBtn, cancelBtn, progressBar, logArea);
 		worker.execute();
 
 		execBtn.setVisible(false);
@@ -197,9 +182,9 @@ public class EncryptFileRoutePanel extends RoutePanel {
 	}
 
 	/**
-	 * 檢查資料夾內待處理的檔案總大小
+	 * 檢查目錄內待處理的檔案總大小
 	 * 
-	 * @param dirPath 資料夾路徑
+	 * @param dirPath 目錄路徑
 	 * @return 是否繼續執行
 	 */
 	private boolean confirmLargeFiles(Path dirPath) {
@@ -225,7 +210,7 @@ public class EncryptFileRoutePanel extends RoutePanel {
 				}
 			}
 		} catch (IOException ex) {
-			DialogUtil.showErrorDialog("無法讀取資料夾");
+			DialogUtil.showErrorDialog("無法讀取目錄。");
 			return false;
 		}
 

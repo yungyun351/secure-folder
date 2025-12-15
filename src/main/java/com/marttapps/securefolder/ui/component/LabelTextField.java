@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.marttapps.securefolder.model.constants.UiConstants;
 
 /**
@@ -21,11 +22,8 @@ public abstract class LabelTextField extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String OUTLINE_PROPERTY = "JComponent.outline";
-	private static final String OUTLINE_ERROR = "error";
-
 	/** 主欄位區域 */
-	protected Box fieldBox;
+	protected Box content;
 	/** 標籤 */
 	protected JLabel label;
 	/** 輸入框 */
@@ -39,14 +37,15 @@ public abstract class LabelTextField extends JPanel {
 		this.errorText = errorText;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		fieldBox = Box.createHorizontalBox();
+		content = Box.createHorizontalBox();
 		label = new JLabel(labelText);
 		label.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, labelSize));
 		label.setAlignmentY(Component.TOP_ALIGNMENT);
-		fieldBox.add(label);
+		content.add(label);
 
-		fieldBox.add(Box.createHorizontalStrut(10));
+		content.add(Box.createHorizontalStrut(10));
 
 		Box inputBox = Box.createVerticalBox();
 		inputBox.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -63,9 +62,9 @@ public abstract class LabelTextField extends JPanel {
 		errorLabel.setPreferredSize(new Dimension(0, errorSize + 2));
 		inputBox.add(errorLabel);
 
-		fieldBox.add(inputBox);
+		content.add(inputBox);
 
-		add(fieldBox);
+		add(content);
 
 		Dimension dimension = new Dimension(width, getPreferredSize().height);
 		setPreferredSize(dimension);
@@ -81,10 +80,10 @@ public abstract class LabelTextField extends JPanel {
 	 * @param comp 元件
 	 */
 	public void addRightComponent(JComponent comp) {
-		comp.setAlignmentY(Component.TOP_ALIGNMENT);
-		fieldBox.add(comp);
-		fieldBox.revalidate();
-		fieldBox.repaint();
+		comp.setAlignmentY(Component.LEFT_ALIGNMENT);
+		content.add(comp);
+		content.revalidate();
+		content.repaint();
 		input.repaint();
 	}
 
@@ -111,7 +110,7 @@ public abstract class LabelTextField extends JPanel {
 	 */
 	public void showError() {
 		errorLabel.setText(errorText);
-		input.putClientProperty(OUTLINE_PROPERTY, OUTLINE_ERROR);
+		input.putClientProperty(FlatClientProperties.OUTLINE, FlatClientProperties.OUTLINE_ERROR);
 	}
 
 	/**
@@ -121,7 +120,7 @@ public abstract class LabelTextField extends JPanel {
 	 */
 	public void showError(String message) {
 		errorLabel.setText(message);
-		input.putClientProperty(OUTLINE_PROPERTY, OUTLINE_ERROR);
+		input.putClientProperty(FlatClientProperties.OUTLINE, FlatClientProperties.OUTLINE_ERROR);
 	}
 
 	/**
@@ -129,7 +128,7 @@ public abstract class LabelTextField extends JPanel {
 	 */
 	public void hideError() {
 		errorLabel.setText("");
-		input.putClientProperty(OUTLINE_PROPERTY, null);
+		input.putClientProperty(FlatClientProperties.OUTLINE, null);
 	}
 
 	/**

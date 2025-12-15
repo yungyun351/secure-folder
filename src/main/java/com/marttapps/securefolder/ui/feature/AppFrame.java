@@ -34,29 +34,32 @@ public class AppFrame extends JFrame {
 		ImageIcon icon = new ImageIcon(getClass().getResource("/img/icon.png"));
 		setIconImage(icon.getImage());
 
-		Box container = Box.createVerticalBox();
+		Box content = Box.createVerticalBox();
 
 		JTabbedPane tabs = new JTabbedPane();
 		tabs.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, UiConstants.STYLE_DEFAULT_FONT_SIZE));
+		tabs.addTab("偏好設定", null);
 		tabs.addTab("加密", null);
 		tabs.addTab("解密", null);
 		tabs.addChangeListener(e -> {
 			int index = tabs.getSelectedIndex();
 			if (index == 0)
-				router.navigate(Routes.ENCRYPT_FILE);
+				router.navigate(Routes.PREFERENCES);
 			else if (index == 1)
+				router.navigate(Routes.ENCRYPT_FILE);
+			else if (index == 2)
 				router.navigate(Routes.DECRYPT_FILE);
 		});
-		container.add(tabs);
+		content.add(tabs);
 
-		container.add(Box.createVerticalStrut(20));
+		content.add(Box.createVerticalStrut(20));
 
 		JPanel screenRow = new JPanel();
 		screenRow.setLayout(new BoxLayout(screenRow, BoxLayout.X_AXIS));
 		screenRow.add(router.getRouterView());
-		container.add(screenRow);
+		content.add(screenRow);
 
-		add(container);
+		add(content);
 
 		setVisible(true);
 	}
