@@ -5,6 +5,10 @@ SecureFolder 是一款簡單易用的 Java 桌面應用程式。
 
 適合用來保護個人文件、專案資料，或任何不希望被未授權讀取的檔案。
 
+| 偏好設定 | 加密 | 解密 |
+|:-:|:-:|:-:|
+| ![圖1](./readme/screenshot-1.png) | ![圖2](./readme/screenshot-2.png) | ![圖3](./readme/screenshot-3.png) |
+
 
 ## ✨ 功能簡介
 
@@ -37,7 +41,7 @@ SecureFolder 會指定資料夾內的所有檔案進行**加密與解密**。
 
 你可以直接執行打包好的 Windows `.exe` 應用程式：
 
-1. 前往 [Releases](https://github.com/xxx/xxx/releases/latest)下載最新版本的 `SecureFolder`。
+1. 前往 [Releases](https://github.com/yungyun351/secure-folder/releases/latest)下載最新版本的 `SecureFolder`。
 2. 解壓縮後執行 `SecureFolder.exe`。
 3. 開啟視窗後可先調整偏好設定，即可開始使用加密 / 解密功能。
 
