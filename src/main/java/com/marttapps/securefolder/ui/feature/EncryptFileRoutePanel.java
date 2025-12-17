@@ -68,6 +68,7 @@ public class EncryptFileRoutePanel extends RoutePanel {
 
 	private void render() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		int fieldWidth = 400;
 		int fieldLabelSize = 20;
@@ -103,7 +104,7 @@ public class EncryptFileRoutePanel extends RoutePanel {
 		execBtn.addActionListener(this::exec);
 		buttonRow.add(execBtn);
 
-		cancelBtn = new JButton("取消");
+		cancelBtn = new JButton("中止");
 		cancelBtn
 				.setFont(new Font(UiConstants.STYLE_DEFAULT_FONT_NAME, Font.BOLD, UiConstants.STYLE_DEFAULT_FONT_SIZE));
 		cancelBtn.setBackground(Color.RED);
