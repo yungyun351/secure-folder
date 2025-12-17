@@ -5,9 +5,7 @@ SecureFolder 是一款簡單易用的 Java 桌面應用程式。
 
 適合用來保護個人文件、專案資料，或任何不希望被未授權讀取的檔案。
 
-| 偏好設定 | 加密 | 解密 |
-|:-:|:-:|:-:|
-| ![圖1](./readme/screenshot-1.png) | ![圖2](./readme/screenshot-2.png) | ![圖3](./readme/screenshot-3.png) |
+![](./readme/screenshot.png)
 
 
 ## ✨ 功能簡介
